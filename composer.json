@@ -1,5 +1,6 @@
 {
     "name": "juve534/lgtm-generator",
+    "description": "LGTM Generator",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -24,5 +25,13 @@
             "name": "juve534",
             "email": "maxim_4141.rock@zoho.com"
         }
-    ]
+    ],
+    "scripts": {
+        "cs-check": [
+            "@php ./vendor/bin/php-cs-fixer fix --dry-run --diff --ansi"
+        ],
+        "cs-fix": [
+            "@php ./vendor/bin/php-cs-fixer fix"
+        ]
+    }
 }
