@@ -1,0 +1,29 @@
+service: lgtm-generator
+
+provider:
+    name: aws
+    region: ap-northeast-1
+    runtime: provided.al2
+
+plugins:
+    - ./vendor/bref/bref
+
+functions:
+    api:
+        handler: index.php
+        description: ''
+        timeout: 28
+        layers:
+            - ${bref:layer.php-80-fpm}
+        events:
+            -   httpApi: '*'
+
+# Exclude files from deployment
+package:
+    exclude:
+        - 'node_modules/**'
+        - 'tests/**'
+        - 'docker-compose.yaml'
+        - '*.md'
+        - '*.sh'
+        - 'vendor/friendsofphp/**'
