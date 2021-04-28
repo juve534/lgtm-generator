@@ -18,6 +18,29 @@ functions:
         events:
             -   httpApi: '*'
 
+resources:
+  Resources:
+    Temporary:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: juve534-lgtm-generator-temporary
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: True
+          BlockPublicPolicy: True
+          IgnorePublicAcls: True
+          RestrictPublicBuckets: True
+    TemporaryBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref Temporary # References the bucket we defined above
+        PolicyDocument:
+          Statement:
+            - Effect: Allow
+              Principal: '*'
+              Action: 's3:PutObject' # to read
+              Resource: !Join [ '/', [ !GetAtt Temporary.Arn, '*' ] ]
+
+
 # Exclude files from deployment
 package:
     exclude:
